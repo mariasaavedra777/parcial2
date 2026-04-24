@@ -43,3 +43,33 @@ function bresenhamLine(x0, y0, x1, y1, color) {
         }
     }
 }
+/**
+ * Implementación del algoritmo de Punto Medio para circunferencias.
+ * Utiliza simetría de octantes para eficiencia.
+ */
+function bresenhamCircle(xc, yc, r, color) {
+    let x = 0;
+    let y = r;
+    let p = 1 - r; // Parámetro de decisión inicial
+
+    const drawOctants = (x, y) => {
+        drawPixel(ctx, xc + x, yc + y, color); drawPixel(ctx, xc - x, yc + y, color);
+        drawPixel(ctx, xc + x, yc - y, color); drawPixel(ctx, xc - x, yc - y, color);
+        drawPixel(ctx, xc + y, yc + x, color); drawPixel(ctx, xc - y, yc + x, color);
+        drawPixel(ctx, xc + y, yc - x, color); drawPixel(ctx, xc - y, yc - x, color);
+    };
+
+    drawOctants(x, y);
+
+    while (x < y) {
+        x++;
+        // Lógica de ajuste del parámetro de decisión según el algoritmo de punto medio
+        if (p < 0) {
+            p += 2 * x + 1;
+        } else {
+            y--;
+            p += 2 * (x - y) + 1;
+        }
+        drawOctants(x, y);
+    }
+}
