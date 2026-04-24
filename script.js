@@ -73,3 +73,21 @@ function bresenhamCircle(xc, yc, r, color) {
         drawOctants(x, y);
     }
 }
+/**
+ * Calcula los vértices de un polígono regular.
+ * @param {number} centerX, centerY - Centro
+ * @param {number} sides - Número de lados
+ * @param {number} radius - Radio
+ * @returns {Array} Arreglo de objetos {x, y}
+ */
+function getPolygonVertices(centerX, centerY, sides, radius) {
+    let vertices = [];
+    for (let i = 0; i < sides; i++) {
+        // Cálculo trigonométrico usando ángulos en radianes
+        let angle = (2 * Math.PI * i) / sides;
+        let x = centerX + radius * Math.cos(angle);
+        let y = centerY + radius * Math.sin(angle);
+        vertices.push({ x, y });
+    }
+    return vertices;
+}
