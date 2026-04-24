@@ -91,3 +91,31 @@ function getPolygonVertices(centerX, centerY, sides, radius) {
     }
     return vertices;
 }
+/**
+ * Función principal para generar la figura solicitada.
+ * Genera n lados (5-10) y dibuja la figura compuesta.
+ */
+function drawComposition() {
+    const centerX = 400;
+    const centerY = 300;
+    const R = 200; // Radio del polígono
+    const n = Math.floor(Math.random() * (10 - 5 + 1)) + 5; // Número aleatorio entre 5 y 10
+
+    const vertices = getPolygonVertices(centerX, centerY, n, R);
+
+    // 1. Trazado del polígono
+    for (let i = 0; i < vertices.length; i++) {
+        let v1 = vertices[i];
+        let v2 = vertices[(i + 1) % vertices.length];
+        bresenhamLine(v1.x, v1.y, v2.x, v2.y, "#FF0000"); // Color rojo para el polígono
+    }
+
+    // 2. Trazado de circunferencias (R/4) en cada vértice
+    const circleRadius = R / 4;
+    vertices.forEach(v => {
+        bresenhamCircle(v.x, v.y, circleRadius, "#0000FF"); // Color azul para los círculos
+    });
+}
+
+// Ejecutar al cargar la página
+window.onload = drawComposition;
